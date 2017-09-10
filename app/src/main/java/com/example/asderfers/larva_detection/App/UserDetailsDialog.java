@@ -26,31 +26,30 @@ public class UserDetailsDialog {
         void onError(Exception exception);
     }
 
-    //TODO handle the case when either field is empty
    private void setuserId()
    {
        String name = lardet.getUser().getuserId();
        if(name != null ) {
-           userId.setText(name);
+           userId.setText("User Id: " +name);
        }
 
    }
     private void setname() {
         String name = lardet.getUser().getname();
         if(name != null ) {
-           mname.setText(name);
+           mname.setText("Name: "+name);
         }
     }
     private void setphoneNo() {
         String num = lardet.getUser().getphoneNo();
         if(num != null) {
-            phoneNo.setText(num);
+            phoneNo.setText("Phone No. "+num);
         }
     }
     private void setemailId() {
         String email = lardet.getUser().getemailId();
         if(email != null) {
-            emailId.setText(email);
+            emailId.setText("Email Id: "+email);
         }
     }
 
@@ -58,6 +57,7 @@ public class UserDetailsDialog {
         mLogoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                lardet.App.clearLoginCredentials();
               //  TODO
 //                new LogoutHelper(new LogoutHelper.LogoutResponseHandler() {
 //                    @Override

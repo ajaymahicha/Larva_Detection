@@ -21,7 +21,7 @@
         </activity>
         <activity
             android:name=".StartActivity"
-            android:label="@string/title_activity_start"
+            android:label="Device List"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginActivity" />
     </application>

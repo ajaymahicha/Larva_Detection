@@ -14,6 +14,7 @@ import com.example.asderfers.larva_detection.App.ParseResponse;
 import com.example.asderfers.larva_detection.App.lardet;
 import com.example.asderfers.larva_detection.Network.LoginHelper;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
@@ -78,9 +79,8 @@ public class LoginActivity extends AppCompatActivity {
         //TODO
     }
 
-    private void performLogin(String userName, String password) {
-        //todo check all data filled
-        if (validate()) {
+    private void performLogin(String userName, String password) throws JSONException {
+        {
             LoginHelper.LoginResponseHandler loginResponseHandler = new LoginHelper.LoginResponseHandler() {
                 @Override
                 public void onSuccess(JSONObject userData) {
@@ -103,11 +103,13 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void doLogin(View view) {
-        dialog.setMessage("Signing in...");
-        dialog.show();
-        lardet.App.saveLoginCredentials(getFilledUsername(),getFilledPassword());
-        performLogin(getFilledUsername(), getFilledPassword());
+    public void doLogin(View view) throws JSONException {
+        if (validate())   {
+            dialog.setMessage("Signing in...");
+            dialog.show();
+            lardet.App.saveLoginCredentials(getFilledUsername(), getFilledPassword());
+            performLogin(getFilledUsername(), getFilledPassword());
+        }
     }
     public boolean validate() {
         boolean valid = true;

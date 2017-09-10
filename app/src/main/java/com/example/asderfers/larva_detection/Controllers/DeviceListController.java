@@ -10,7 +10,6 @@ import com.example.asderfers.larva_detection.Model.User;
 import com.example.asderfers.larva_detection.Network.DeviceListFetcher;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,7 @@ public class DeviceListController {
         if(deviceList == null) {
             new DeviceListFetcher(new DeviceListFetcher.DeviceListResponseHandler() {
                 @Override
-                public void onSuccess(JSONArray deviceList, JSONObject user) {
+                public void onSuccess(JSONArray deviceList) {
                     try {
                         ArrayList<Device> updatedList = ParseResponse.parseDeviceList(deviceList);
 
@@ -57,7 +56,7 @@ public class DeviceListController {
         } else {
             new DeviceListFetcher(new DeviceListFetcher.DeviceListResponseHandler() {
                 @Override
-                public void onSuccess(JSONArray deviceList, JSONObject user) {
+                public void onSuccess(JSONArray deviceList) {
                     try {
                         ArrayList<Device> updatedList = ParseResponse.parseDeviceList(deviceList);
 
@@ -87,7 +86,7 @@ public class DeviceListController {
         handler.duringWait();
         new DeviceListFetcher(new DeviceListFetcher.DeviceListResponseHandler() {
             @Override
-            public void onSuccess( JSONArray deviceList, JSONObject user) {
+            public void onSuccess( JSONArray deviceList) {
                 try {
                     Log.d(TAG,"got deviceList : " + deviceList.toString());
                     ArrayList<Device> updatedList = ParseResponse.parseDeviceList(deviceList);

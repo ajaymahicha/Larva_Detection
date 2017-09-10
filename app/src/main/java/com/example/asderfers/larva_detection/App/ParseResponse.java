@@ -23,11 +23,11 @@ public class ParseResponse {
         return new User(userId,name,emailId,phoneNo);
     }
     public static Device parseDeviceData(JSONObject deviceData) throws JSONException{
-        String devicesecret = deviceData.getString("deviceSecret");
         String devicename = deviceData.getString("name");
         String deviceid = deviceData.getString("deviceId");
         String devicestatus = deviceData.getString("status");
-        return new Device(devicesecret,deviceid,devicename,devicestatus);
+        String lastupdated = deviceData.getString("lastUpdated");
+        return new Device(deviceid,devicename,devicestatus,lastupdated);
     }
     public static ArrayList<Device> parseDeviceList(JSONArray deviceList) throws JSONException{
         ArrayList<Device> devices = new ArrayList<>(deviceList.length());

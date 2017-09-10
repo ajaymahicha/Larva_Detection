@@ -21,7 +21,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
 
     public static class DeviceViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
-        TextView deviceId, devicename, devicestatus,devicesecret;
+        TextView deviceId, devicename, devicestatus,devicelastupdated;
 
         DeviceViewHolder(final View itemView, final Activity activity) {
             super(itemView);
@@ -29,7 +29,7 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
             deviceId = (TextView)itemView.findViewById(R.id.device_id);
             devicename = (TextView)itemView.findViewById(R.id.device_name);
             devicestatus = (TextView)itemView.findViewById(R.id.device_status);
-            devicesecret= (TextView)itemView.findViewById(R.id.device_secret);
+            devicelastupdated= (TextView)itemView.findViewById(R.id.device_lastdate);
             cv.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     //todo add edit and delete
@@ -69,10 +69,10 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
     @Override
     public void onBindViewHolder(DeviceViewHolder deviceViewHolder, int i) {
         Device device = deviceList.getDevice(i);
-        deviceViewHolder.devicesecret.setText(device.getdeviceSecret());
-        deviceViewHolder.devicename.setText(device.getdevicename());
-        deviceViewHolder.deviceId.setText(device.getdeviceId());
-        deviceViewHolder.devicestatus.setText(device.getdevicestatus());
+        deviceViewHolder.devicelastupdated.setText("Last Updated On: "+device.getlastUpdated());
+        deviceViewHolder.devicename.setText("Name: "+device.getdevicename());
+        deviceViewHolder.deviceId.setText("Id: "+device.getdeviceId());
+        deviceViewHolder.devicestatus.setText("Status: "+device.getdevicestatus());
     }
 
     @Override

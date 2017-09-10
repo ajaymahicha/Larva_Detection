@@ -12,7 +12,8 @@ import com.example.asderfers.larva_detection.Model.User;
 /**
  * Created by akm on 09-Sep-17.
  */
-public class lardet extends Application {
+public class lardet extends Application
+{
     public static lardet App;
     private static RequestQueue requestQueue;
     private static User user;
@@ -29,30 +30,36 @@ public class lardet extends Application {
     public void setCookie(String cookie) {
         PreferenceManager.getDefaultSharedPreferences(this).edit().putString("cookie", cookie).commit();
     }
-    public String getCookie() {
+    public String getCookie()
+    {
         return PreferenceManager.getDefaultSharedPreferences(this).getString("cookie","NULL");
     }
-    public void saveLoginCredentials(String username, String password) {
+    public void saveLoginCredentials(String username, String password)
+    {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
         editor.putBoolean("isLoginCredentialsSaved",true);
         editor.putString("savedUsername",username);
         editor.putString("savedPassword",password);
         editor.apply();
     }
-    public void clearLoginCredentials() {
+    public void clearLoginCredentials()
+    {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
         editor.putBoolean("isLoginCredentialsSaved",false);
         editor.remove("savedUsername");
         editor.remove("savedPassword");
         editor.apply();
     }
-    public boolean isLoginCredentialsSaved() {
+    public boolean isLoginCredentialsSaved()
+    {
         return PreferenceManager.getDefaultSharedPreferences(this).getBoolean("isLoginCredentialsSaved",false);
     }
-    public String getLoginUsername() {
+    public String getLoginUsername()
+    {
         return PreferenceManager.getDefaultSharedPreferences(this).getString("savedUsername", "");
     }
-    public String gettLoginPassword() {
+    public String gettLoginPassword()
+    {
         return PreferenceManager.getDefaultSharedPreferences(this).getString("savedPassword","");
     }
     @Override

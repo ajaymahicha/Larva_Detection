@@ -11,16 +11,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.asderfers.larva_detection.Adapters.DeviceListAdapter;
 import com.example.asderfers.larva_detection.App.UserDetailsDialog;
 import com.example.asderfers.larva_detection.App.lardet;
+import com.example.asderfers.larva_detection.Controllers.AsyncResponseHandler;
+import com.example.asderfers.larva_detection.Controllers.DeviceListController;
+import com.example.asderfers.larva_detection.Controllers.SyncResponseHandler;
+import com.example.asderfers.larva_detection.Network.AddNewDevice;
 
 import org.json.JSONObject;
 
@@ -34,13 +40,12 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        toolbar.setTitle("Device List");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+                AddNewDevice();
             }
         });
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.deviceList);
@@ -81,7 +86,7 @@ public class StartActivity extends AppCompatActivity {
                     recyclerView.setVisibility(View.VISIBLE);
                 } else {
                     notice.setVisibility(View.VISIBLE);
-                    notice.setText("No devices to view");
+                    notice.setText("No device to view");
                     recyclerView.setVisibility(View.GONE);
                 }
 
@@ -172,6 +177,53 @@ public class StartActivity extends AppCompatActivity {
                 onUserLogout();
             }
         }).setUpDialog();
+    }
+    private void AddNewDevice(){
+        final Dialog dialog = new Dialog(StartActivity.this,R.style.DialogSlideAnimBottom);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_new_device);
+        dialog.findViewById(R.id.create_device_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = ((TextView) dialog.findViewById(R.id.devicename)).getText().toString();
+                String id = ((TextView) dialog.findViewById(R.id.deviceid)).getText().toString();
+                AddNewDevice addNewDevice = new AddNewDevice(getNewDeviceResponseHandler(dialog), name,id);
+                addNewDevice.getAddNewDeviceResponse();
+            }
+        });
+        setDialogLayoutParams(dialog);
+    }
+    private AddNewDevice.AddNewDeviceResponseHandler getNewDeviceResponseHandler(final Dialog dialog){
+        AddNewDevice.AddNewDeviceResponseHandler addNewDeviceResponseHandler = new AddNewDevice.AddNewDeviceResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                Log.d("addNewDevice", response.toString());
+                try{
+                    boolean resp = response.getBoolean("error");
+                    String msg = "Device created successfully!";
+                    if(resp)
+                        msg = "There was some error while creating the thread.Please try again!";
+                    else {
+                        dialog.dismiss();
+                    }
+                    Toast.makeText(StartActivity.this, msg, Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                Log.d("addNewDevice","failure");
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Log.d("addNewDevice",e.toString());
+                e.printStackTrace();
+            }
+        };
+        return addNewDeviceResponseHandler;
     }
     private void setDialogLayoutParams(Dialog dialog){
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

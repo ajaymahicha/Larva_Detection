@@ -76,6 +76,10 @@ private static final String TAG=MainActivity.class.getName();
     private void onLoginFailure() {
         Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Login failed");
+        lardet.App.clearLoginCredentials();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
         //TODO
     }
 
@@ -83,6 +87,10 @@ private static final String TAG=MainActivity.class.getName();
         Toast.makeText(this, "Error:"+exception, Toast.LENGTH_LONG).show();
         Log.e(TAG, "Error during login: " + exception);
         exception.printStackTrace();
+        lardet.App.clearLoginCredentials();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
         //TODO
     }
 
